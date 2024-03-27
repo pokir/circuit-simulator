@@ -1,7 +1,12 @@
+import type p5 from 'p5';
+import { Drawable } from '../drawable.js';
 import { InputNode } from '../input_node.js';
 import { OutputNode } from '../output_node.js';
 
-export abstract class Component<numInputs extends number, numOutputs extends number> {
+export abstract class Component<numInputs extends number, numOutputs extends number>
+implements Drawable {
+  private position: [number, number] = [0, 0];
+
   private inputs: InputNode[] & { length: numInputs };
 
   private outputs: OutputNode[] & { length: numOutputs };
@@ -36,4 +41,7 @@ export abstract class Component<numInputs extends number, numOutputs extends num
 
   // does the component's logic
   abstract resolveOutput(): void;
+
+  // draws the component
+  abstract draw(p: p5): void;
 }

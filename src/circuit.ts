@@ -4,7 +4,6 @@ import { Updatable } from './updatable.js';
 import { Component } from './components/component.js';
 import { AlwaysHigh } from './components/always_high.js';
 import { AlwaysLow } from './components/always_low.js';
-import { OrGate } from './components/or_gate.js';
 import { AndGate } from './components/and_gate.js';
 
 export class Circuit implements Updatable, Drawable {
@@ -48,8 +47,8 @@ export class Circuit implements Updatable, Drawable {
   }
 
   draw(p: p5) {
-    /* this.components.forEach((component) => {
+    this.components.forEach((component) => {
       // component.draw(p);
-    }); */
+    });
   }
 }
