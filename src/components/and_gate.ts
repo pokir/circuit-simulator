@@ -1,13 +1,18 @@
+import { OutputNode } from '../output_node.js';
 import { Component } from './component.js';
 
 export class AndGate<numInputs extends number> extends Component<numInputs, 1> {
-  constructor(numberOfInputs: numInputs) {
-    super(numberOfInputs, 1);
+  constructor(inputs: OutputNode[] & { length: numInputs }) {
+    super(inputs, 1);
   }
 
-  resolveOutput() {
+  computeOutput() {
     const nextValue = this.getInputs()
       .reduce((accumulator, bit) => accumulator && bit.getValue(), true);
-    this.getOutputs()[0].resolve(nextValue);
+    this.getOutputs()[0].setValue(nextValue);
+  }
+
+  draw() {
+
   }
 }

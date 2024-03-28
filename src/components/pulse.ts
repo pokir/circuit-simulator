@@ -9,18 +9,18 @@ export class Pulse extends Component<0, 1> {
 
   constructor(lowTime: number, highTime: number, timeOffset: number = 0) {
     // lowTime, highTime, and timeOffset are in update frames
-    super(0, 1);
+    super([], 1);
 
     this.lowTime = lowTime;
     this.highTime = highTime;
     this.updateCount = timeOffset;
   }
 
-  resolveOutput() {
+  computeOutput() {
     const total = this.lowTime + this.highTime;
 
-    if (this.updateCount % total < this.lowTime) this.getOutputs()[0].resolve(false);
-    else this.getOutputs()[0].resolve(true);
+    if (this.updateCount % total < this.lowTime) this.getOutputs()[0].setValue(false);
+    else this.getOutputs()[0].setValue(true);
 
     this.updateCount += 1;
   }

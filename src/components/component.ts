@@ -1,46 +1,49 @@
 import type p5 from 'p5';
 import { Drawable } from '../drawable.js';
-import { InputNode } from '../input_node.js';
 import { OutputNode } from '../output_node.js';
 
 export abstract class Component<numInputs extends number, numOutputs extends number>
 implements Drawable {
   private position: [number, number] = [0, 0];
 
-  private inputs: InputNode[] & { length: numInputs };
+  private inputs: OutputNode[] & { length: numInputs };
 
   private outputs: OutputNode[] & { length: numOutputs };
 
-  constructor(numberOfInputs: numInputs, numberOfOutputs: numOutputs) {
-    this.inputs = new Array(numberOfInputs)
-      .fill(null)
-      .map(
-        () => new InputNode(() => this.onInputResolved()),
-      ) as InputNode[] & { length: numInputs };
+  constructor(inputs: OutputNode[] & { length: numInputs }, numberOfOutputs: numOutputs) {
+    this.inputs = inputs;
 
     this.outputs = new Array(numberOfOutputs)
       .fill(null)
-      .map(() => new OutputNode()) as OutputNode[] & { length: numOutputs };
+      .map(() => new OutputNode(this)) as OutputNode[] & { length: numOutputs };
   }
 
-  onInputResolved() {
-    const inputsReady = this.inputs.every((input) => input.isResolved() || !input.isConnected());
-
-    if (inputsReady) {
-      this.resolveOutput();
-    }
+  getInputs(): OutputNode[] & { length: numInputs } {
+    return this.inputs;
   }
 
-  getInputs() {
-    return this.inputs.slice();
+  getOutputs(): OutputNode[] & { length: numOutputs } {
+    return this.outputs;
   }
 
-  getOutputs() {
-    return this.outputs.slice();
+  getPosition(): [number, number] {
+    return this.position;
+  }
+
+  resolve(): void {
+    // resolve all inputs first
+    const inputGates = new Set(this.inputs.map((input: OutputNode) => input.getOwner()));
+
+    inputGates.forEach((inputGate) => {
+      inputGate.resolve();
+    });
+
+    // compute the output
+    this.computeOutput();
   }
 
   // does the component's logic
-  abstract resolveOutput(): void;
+  abstract computeOutput(): void;
 
   // draws the component
   abstract draw(p: p5): void;

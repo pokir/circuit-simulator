@@ -12,7 +12,7 @@ const sketch = (p) => {
   p.draw = () => {
     p.background(51);
 
-    if (p.frameCount % 60 === 0) {
+    if (p.frameCount % 180 === 0) {
       circuit.draw();
       circuit.update();
     }

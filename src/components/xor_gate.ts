@@ -1,13 +1,16 @@
+import { OutputNode } from '../output_node.js';
 import { Component } from './component.js';
 
-export class XorGate extends Component<2, 1> {
-  constructor() {
-    super(2, 1);
+export class XorGate<numInputs extends number> extends Component<numInputs, 1> {
+  constructor(inputs: OutputNode[] & { length: numInputs }) {
+    super(inputs, 1);
   }
 
-  resolveOutput() {
-    const input1 = this.getInputs()[0].getValue();
-    const input2 = this.getInputs()[1].getValue();
-    this.getOutputs()[0].resolve(input1 !== input2);
+  computeOutput() {
+    const outputValue = this.getInputs()
+      .map((input) => input.getValue())
+      .reduce((accumulator, inputValue) => accumulator !== inputValue);
+
+    this.getOutputs()[0].setValue(outputValue);
   }
 }
