@@ -7,10 +7,14 @@ export class Junction<numOutputs extends number> extends Component<1, numOutputs
   }
 
   computeOutput() {
-    const inputValue = this.getInputs()[0].getValue();
+    const inputValue = this.inputs[0].getValue();
 
-    this.getOutputs().forEach((output) => {
+    this.outputs.forEach((output) => {
       output.setValue(inputValue);
     });
+  }
+
+  drawComponent() {
+
   }
 }

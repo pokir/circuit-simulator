@@ -8,9 +8,13 @@ export class OrGate<numInputs extends number> extends Component<numInputs, 1> {
   }
 
   computeOutput() {
-    const nextValue = this.getInputs()
+    const nextValue = this.inputs
       .reduce((accumulator, bit) => accumulator || bit.getValue(), false);
 
-    this.getOutputs()[0].setValue(nextValue);
+    this.outputs[0].setValue(nextValue);
+  }
+
+  drawComponent(p: p5) {
+
   }
 }

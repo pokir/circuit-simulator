@@ -7,6 +7,10 @@ export class NotGate extends Component<1, 1> {
   }
 
   computeOutput() {
-    this.getOutputs()[0].setValue(!this.getInputs()[0].getValue());
+    this.outputs[0].setValue(!this.inputs[0].getValue());
+  }
+
+  drawComponent() {
+
   }
 }

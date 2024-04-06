@@ -2,9 +2,6 @@ import type p5 from 'p5';
 import { Drawable } from './drawable.js';
 import { Updatable } from './updatable.js';
 import { Component } from './components/component.js';
-import { AlwaysHigh } from './components/always_high.js';
-import { AlwaysLow } from './components/always_low.js';
-import { OrGate } from './components/or_gate.js';
 
 export class Circuit implements Updatable, Drawable {
   private gridWidth: number;
@@ -16,15 +13,6 @@ export class Circuit implements Updatable, Drawable {
   constructor(gridWidth: number, gridHeight: number) {
     this.gridWidth = gridWidth;
     this.gridHeight = gridHeight;
-
-    const a = new AlwaysHigh();
-    const b = new AlwaysLow();
-
-    const or = new OrGate([a.getOutputs()[0], b.getOutputs()[0]]);
-
-    this.addComponent(a);
-    this.addComponent(b);
-    this.addComponent(or);
   }
 
   addComponent(component: Component<number, number>) {

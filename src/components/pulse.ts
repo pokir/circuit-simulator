@@ -19,9 +19,13 @@ export class Pulse extends Component<0, 1> {
   computeOutput() {
     const total = this.lowTime + this.highTime;
 
-    if (this.updateCount % total < this.lowTime) this.getOutputs()[0].setValue(false);
-    else this.getOutputs()[0].setValue(true);
+    if (this.updateCount % total < this.lowTime) this.outputs[0].setValue(false);
+    else this.outputs[0].setValue(true);
 
     this.updateCount += 1;
+  }
+
+  drawComponent() {
+
   }
 }

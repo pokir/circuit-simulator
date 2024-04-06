@@ -7,10 +7,14 @@ export class XorGate<numInputs extends number> extends Component<numInputs, 1> {
   }
 
   computeOutput() {
-    const outputValue = this.getInputs()
+    const outputValue = this.inputs
       .map((input) => input.getValue())
       .reduce((accumulator, inputValue) => accumulator !== inputValue);
 
-    this.getOutputs()[0].setValue(outputValue);
+    this.outputs[0].setValue(outputValue);
+  }
+
+  drawComponent() {
+
   }
 }
